@@ -47,7 +47,7 @@ ul {
   li {
     margin-bottom: 8px;
   }
-  
+
   li button {
     margin-left: 12px;
     padding: 4px 10px;
@@ -57,4 +57,19 @@ ul {
   
   li button:hover {
     background: #b91c1c;
+  }
+
+  li input[type='checkbox'] {
+    margin-right: 8px;
+  }
+  
+  li.done span {
+    text-decoration: line-through;
+    color: #888;
+  }
+  
+  #task-count {
+    color: #555;
+    font-size: 14px;
+    margin-top: 8px;
   }

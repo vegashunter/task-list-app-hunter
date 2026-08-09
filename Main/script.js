@@ -1,6 +1,7 @@
 const taskInput = document.getElementById('task-input');
 const addButton = document.getElementById('add-btn');
 const taskList = document.getElementById('task-list');
+const taskCount = document.getElementById('task-count');
 
 const STORAGE_KEY = 'my-tasks';
 let tasks = loadTasks();
@@ -15,7 +16,18 @@ taskInput.addEventListener('keydown', (event) => {
 
 function loadTasks() {
   const saved = localStorage.getItem(STORAGE_KEY);
-  return saved ? JSON.parse(saved) : [];
+  if (!saved) {
+    return [];
+  }
+
+  const parsed = JSON.parse(saved);
+
+  return parsed.map((item) => {
+    if (typeof item === 'string') {
+      return { text: item, done: false };
+    }
+    return item;
+  });
 }
 
 function saveTasks() {
@@ -29,10 +41,16 @@ function addTask() {
     return;
   }
 
-  tasks.push(text);
+  tasks.push({ text, done: false });
   taskInput.value = '';
   saveTasks();
   renderTasks();
+}
+
+function updateCount() {
+  const remaining = tasks.filter((task) => !task.done).length;
+  const label = remaining === 1 ? 'task' : 'tasks';
+  taskCount.textContent = `${remaining} ${label} left`;
 }
 
 function renderTasks() {
@@ -41,8 +59,21 @@ function renderTasks() {
   tasks.forEach((task, index) => {
     const li = document.createElement('li');
 
+    if (task.done) {
+      li.classList.add('done');
+    }
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = task.done;
+    checkbox.addEventListener('change', () => {
+      tasks[index].done = checkbox.checked;
+      saveTasks();
+      renderTasks();
+    });
+
     const span = document.createElement('span');
-    span.textContent = task;
+    span.textContent = task.text;
 
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
@@ -52,10 +83,13 @@ function renderTasks() {
       renderTasks();
     });
 
+    li.appendChild(checkbox);
     li.appendChild(span);
     li.appendChild(deleteBtn);
     taskList.appendChild(li);
   });
+
+  updateCount();
 }
 
 renderTasks();
