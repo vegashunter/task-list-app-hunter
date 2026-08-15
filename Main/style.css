@@ -1,9 +1,29 @@
+:root {
+  --bg: #f9fafb;
+  --text: #1f2937;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --muted: #555;
+  --input-bg: #ffffff;
+}
+
+:root.dark {
+  --bg: #111827;
+  --text: #f9fafb;
+  --card: #1f2937;
+  --border: #374151;
+  --muted: #9ca3af;
+  --input-bg: #374151;
+}
+
 body {
   font-family: system-ui, sans-serif;
   max-width: 600px;
   margin: 40px auto;
   padding: 0 20px;
   line-height: 1.6;
+  background: var(--bg);
+  color: var(--text);
 }
 
 h1 {
@@ -29,14 +49,17 @@ button:hover {
   font-weight: bold;
 }
 
-input{
-    display: block;
-    margin: 12px 0;
-    padding: 8px 12px;
-    font-size: 16px;
-    border-radius: 6px;
-    width: 100%;
-    max-width: 400px;
+input {
+  display: block;
+  margin: 12px 0;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 400px;
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 ul {
@@ -69,7 +92,7 @@ ul {
   }
   
   #task-count {
-    color: #555;
+    color: var(--muted);
     font-size: 14px;
     margin-top: 8px;
   }
@@ -82,4 +105,11 @@ ul {
   
   #clear-btn:hover {
     background: #4b5563;
+  }
+
+  #theme-btn {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
   }

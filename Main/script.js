@@ -3,6 +3,8 @@ const addButton = document.getElementById('add-btn');
 const taskList = document.getElementById('task-list');
 const taskCount = document.getElementById('task-count');
 const clearButton = document.getElementById('clear-btn');
+const themeButton = document.getElementById('theme-btn');
+const THEME_KEY = 'theme';
 
 const STORAGE_KEY = 'my-tasks';
 let tasks = loadTasks();
@@ -17,10 +19,10 @@ taskInput.addEventListener('keydown', (event) => {
 });
 
 function clearCompleted() {
-    tasks = tasks.filter((task) => !task.done);
-    saveTasks();
-    renderTasks();
-  }
+  tasks = tasks.filter((task) => !task.done);
+  saveTasks();
+  renderTasks();
+}
 
 function loadTasks() {
   const saved = localStorage.getItem(STORAGE_KEY);
@@ -100,4 +102,18 @@ function renderTasks() {
   updateCount();
 }
 
+function applyTheme(isDark) {
+  document.documentElement.classList.toggle('dark', isDark);
+  themeButton.textContent = isDark ? 'Light mode' : 'Dark mode';
+  localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+}
+
 renderTasks();
+
+const savedTheme = localStorage.getItem(THEME_KEY);
+applyTheme(savedTheme === 'dark');
+
+themeButton.addEventListener('click', () => {
+  const isDark = !document.documentElement.classList.contains('dark');
+  applyTheme(isDark);
+});
