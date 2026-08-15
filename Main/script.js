@@ -2,17 +2,25 @@ const taskInput = document.getElementById('task-input');
 const addButton = document.getElementById('add-btn');
 const taskList = document.getElementById('task-list');
 const taskCount = document.getElementById('task-count');
+const clearButton = document.getElementById('clear-btn');
 
 const STORAGE_KEY = 'my-tasks';
 let tasks = loadTasks();
 
 addButton.addEventListener('click', addTask);
+clearButton.addEventListener('click', clearCompleted);
 
 taskInput.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
     addTask();
   }
 });
+
+function clearCompleted() {
+    tasks = tasks.filter((task) => !task.done);
+    saveTasks();
+    renderTasks();
+  }
 
 function loadTasks() {
   const saved = localStorage.getItem(STORAGE_KEY);

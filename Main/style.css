@@ -73,3 +73,13 @@ ul {
     font-size: 14px;
     margin-top: 8px;
   }
+
+  #clear-btn {
+    margin-top: 8px;
+    background: #6b7280;
+    font-size: 14px;
+  }
+  
+  #clear-btn:hover {
+    background: #4b5563;
+  }
